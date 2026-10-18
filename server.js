@@ -584,7 +584,7 @@ app.use((req, res) => {
 });
 
 // Start Server
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`☕ Mawal Marrakech Cafe Survey Platform running at http://localhost:${PORT}`);
     console.log(`📊 Admin Dashboard available at http://localhost:${PORT}/admin`);
