@@ -1,0 +1,32 @@
+{
+  "name": "marrakesh-questionnaire",
+  "version": "1.0.0",
+  "description": "منصة قياس رضا العملاء وتحليل الجودة لمقهى موال مراكش - المدينة المنورة (فرع النبلاء وفرع سلطانة الرضا مول)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "survey",
+    "customer-experience",
+    "mawal-marrakech",
+    "cafe-analytics",
+    "csat",
+    "nps",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Mawal Marrakech",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.24.5",
+    "uuid": "^14.0.3",
+    "xlsx": "^0.18.5"
+  }
+}

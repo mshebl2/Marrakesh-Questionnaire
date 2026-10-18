@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>استبيان تجربة العملاء | مقهى موال مراكش</title>
+  <meta name="description" content="شاركنا رأيك في تجربة زيارتك لمقهى موال مراكش بالمدينة المنورة، لنرتقي بخدمتنا وجودة قهوتنا ونكافئك بقسيمة خصم فورية.">
+  <link rel="icon" type="image/png" href="/assets/logo.png">
+  
+  <!-- Modern Arabic Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="/css/survey.css">
+</head>
+<body>
+
+  <!-- Top Sticky Header -->
+  <header class="survey-header">
+    <a href="/" class="brand-wrapper">
+      <img src="/assets/logo.png" alt="شعار مقهى موال مراكش" class="brand-logo">
+      <div class="brand-info">
+        <h1>مقهى موال مراكش</h1>
+        <span>Mawal Marrakech Cafe • المدينة المنورة</span>
+      </div>
+    </a>
+
+    <div class="header-actions">
+      <!-- Quick Branch Select in header for multi-branch switching -->
+      <select id="branch-select-header" class="branch-select" style="display: none;" title="اختر الفرع"></select>
+    </div>
+  </header>
+
+  <!-- Survey Main Content Wrapper -->
+  <main class="survey-wrapper">
+    
+    <!-- Progress Indicator -->
+    <section class="progress-container" id="progress-container" aria-label="شريط تقدم الاستبيان">
+      <div class="progress-header">
+        <div class="section-counter" id="section-counter">
+          جاري تجهيز الاستبيان...
+        </div>
+        <div class="time-estimate">
+          ⏱️ يستغرق دقيقتين فقط
+        </div>
+      </div>
+      <div class="progress-bar-bg" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar-fill" id="progress-bar-fill"></div>
+      </div>
+    </section>
+
+    <!-- Interactive Survey Card -->
+    <section class="survey-card" id="survey-card-container">
+      <div id="survey-content">
+        <!-- Dynamic survey content rendered by survey.js -->
+        <div style="text-align: center; padding: 40px 10px; color: var(--text-muted);">
+          <span>جاري تحميل أسئلة الاستبيان... ☕</span>
+        </div>
+      </div>
+
+      <!-- Navigation Actions -->
+      <div class="survey-footer" id="footer-nav">
+        <div>
+          <button type="button" class="btn-nav btn-secondary" id="btn-prev" style="display: none;">
+            السابق
+          </button>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button type="button" class="btn-nav btn-skip" id="btn-skip" style="display: none;">
+            تخطي هذا القسم ↷
+          </button>
+          <button type="button" class="btn-nav btn-primary" id="btn-next">
+            التالي ➔
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Survey Page Footer -->
+  <footer class="survey-page-footer">
+    <p>مقهى موال مراكش © 2026 • المدينة المنورة (فرع النبلاء - فرع سلطانة الرضا مول) • <a href="/login">بوابة الإدارة</a></p>
+  </footer>
+
+  <!-- Modal for Table QR Code Stand -->
+  <div class="modal-overlay" id="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qr-branch-title">
+    <div class="modal-content">
+      <button type="button" class="modal-close" id="btn-close-qr" aria-label="إغلاق">&times;</button>
+      
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 6px;">رمز الاستجابة السريعة (QR)</h3>
+      <p style="font-size: 0.88rem; color: var(--text-muted);">امسح الكود بكاميرا الجوال لفتح الاستبيان مباشرة على طاولة العميل</p>
+
+      <div class="table-tent-card">
+        <div style="font-size: 1.1rem; font-weight: 800; color: var(--accent);" id="qr-branch-title">مقهى موال مراكش - المدينة المنورة</div>
+        <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-top: 4px;">رأيك يهمنا.. شاركنا تجربتك واحصل على خصم فوري ☕</div>
+        
+        <div class="table-tent-qr" id="table-qr-canvas"></div>
+        
+        <div style="font-size: 0.8rem; color: #ffda9e; font-weight: 700;">امسح الكود بكاميرا جوالك للمشاركة</div>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: center; margin-top: 16px;">
+        <button type="button" class="btn-nav btn-primary" id="btn-print-qr">
+          🖨️ طباعة ستاند الطاولة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Local Vendor Scripts -->
+  <script src="/js/qrcode.min.js"></script>
+  <script src="/js/confetti.min.js"></script>
+  <!-- Survey Controller -->
+  <script src="/js/survey.js"></script>
+</body>
+</html>

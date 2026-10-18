@@ -1,0 +1,487 @@
+{
+  "admins": [
+    {
+      "id": "admin-1",
+      "createdAt": "2026-10-18T19:45:03.352Z",
+      "name": "المدير العام",
+      "passwordHash": "$2b$10$lbjS9XU552fSlSGx8MWb6.IqwikyKJmwLzQvuVHXkKWOPwiueIX9u",
+      "role": "superadmin",
+      "updatedAt": "2026-10-18T19:49:31.549Z",
+      "username": "admin",
+      "email": "admin@mawal-marrakech.com"
+    }
+  ],
+  "branches": [
+    {
+      "id": "branch-1",
+      "active": true,
+      "address": "حي النبلاء، الدور الثاني",
+      "city": "المدينة المنورة",
+      "createdAt": "2026-10-18T19:45:07.392Z",
+      "managerName": "مشرف فرع النبلاء",
+      "name": "فرع النبلاء - الدور الثاني",
+      "updatedAt": "2026-10-18T19:45:07.392Z",
+      "whatsappDisplay": "00966567833138",
+      "whatsappNumber": "966567833138"
+    },
+    {
+      "id": "branch-2",
+      "active": true,
+      "address": "طريق سلطانة، الرضا مول، الدور الثاني",
+      "city": "المدينة المنورة",
+      "createdAt": "2026-10-18T19:45:07.673Z",
+      "managerName": "مشرف فرع سلطانة",
+      "name": "فرع سلطانة - الرضا مول - الدور الثاني",
+      "updatedAt": "2026-10-18T19:45:07.673Z",
+      "whatsappDisplay": "+966 54 873 1474",
+      "whatsappNumber": "966548731474"
+    }
+  ],
+  "questions": [
+    {
+      "id": "sec_general",
+      "conditionQuestion": null,
+      "createdAt": "2026-10-18T19:45:08.233Z",
+      "description": "انطباعك الكلي عن التجربة واحتمالية ترشيح الكافيه لأحبائك",
+      "questions": [
+        {
+          "id": "overall_satisfaction",
+          "type": "stars",
+          "label": "ما هو تقييمك الكلي لتجربتك في كافيه أرومة اليوم؟",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "nps_score",
+          "type": "nps",
+          "label": "ما مدى احتمالية ترشيحك لكافيه أرومة لأصدقائك وزملائك؟ (مقياس NPS من 0 إلى 10)",
+          "required": true,
+          "min": 0,
+          "max": 10
+        },
+        {
+          "id": "visit_type",
+          "type": "choice",
+          "label": "طبيعة الزيارة اليوم:",
+          "options": [
+            "جلسة داخلية في الصالة",
+            "طلب خارجي (سفري)",
+            "جلسة خارجية / تراس",
+            "خدمة السيارات / درايف ثرو"
+          ],
+          "required": true
+        },
+        {
+          "id": "visit_time",
+          "type": "choice",
+          "label": "فترة الزيارة:",
+          "options": [
+            "الصباح الباكر (7 ص - 11 ص)",
+            "فترة الظهيرة (11 ص - 4 ع)",
+            "فترة المساء (4 ع - 9 م)",
+            "فترة السهرة (9 م - 12 ص)"
+          ],
+          "required": true
+        }
+      ],
+      "sectionKey": "general",
+      "skippable": false,
+      "title": "التقييم العام ونوع الزيارة",
+      "updatedAt": "2026-10-18T19:45:08.233Z"
+    },
+    {
+      "id": "sec_barista",
+      "conditionQuestion": null,
+      "createdAt": "2026-10-18T19:45:08.620Z",
+      "description": "تقييم كفاءة طاقم الضيافة وحسن الاستقبال وسرعة تلبية طلبك",
+      "questions": [
+        {
+          "id": "welcome_reception",
+          "type": "stars",
+          "label": "حرارة الترحيب وحسن الاستقبال عند دخول الكافيه",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "staff_attitude",
+          "type": "stars",
+          "label": "اللباقة والابتسامة وحسن التعامل من فريق الصالة",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "barista_knowledge",
+          "type": "stars",
+          "label": "احترافية الباريستا ومعرفته بخلطات ومحاصيل القهوة",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "service_speed",
+          "type": "stars",
+          "label": "سرعة البدء في أخذ طلبك والتجاوب الفوري",
+          "required": true,
+          "max": 5
+        }
+      ],
+      "sectionKey": "barista",
+      "skippable": false,
+      "title": "فريق العمل والباريستا",
+      "updatedAt": "2026-10-18T19:45:08.620Z"
+    },
+    {
+      "id": "sec_beverages",
+      "conditionQuestion": null,
+      "createdAt": "2026-10-18T19:45:08.908Z",
+      "description": "جودة المشروبات، النكهة، حرارة التقديم وفن اللاتيه",
+      "questions": [
+        {
+          "id": "coffee_taste",
+          "type": "stars",
+          "label": "جودة ونقاء الطعم وتوازن نكهة القهوة",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "temperature_perfection",
+          "type": "stars",
+          "label": "مناسبة درجة حرارة المشروب (ساخن تماماً / مثلج بانتعاش)",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "presentation_art",
+          "type": "stars",
+          "label": "جمال التقديم وفن الرسم بالحليب (Latte Art) ونظافة الكوب",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "menu_variety",
+          "type": "stars",
+          "label": "تنوع خيارات المشروبات وتوفر البدائل (حليب الشوفان، جوز الهند، خالي من الكافيين)",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "beverage_type",
+          "type": "choice",
+          "label": "ما هو المشروب الأساسي الذي جربته اليوم؟",
+          "options": [
+            "فلات وايت / كابتشينو",
+            "قهوة مقطرة V60 حار أو مثلج",
+            "سبانش لاتيه / مشروب بارد مميز",
+            "كولد برو / نيترو",
+            "أمريكانو / كورتادو",
+            "ماتشا لاتيه / شاي مختص",
+            "عصير منعش / موهيتو"
+          ],
+          "required": false
+        }
+      ],
+      "sectionKey": "beverages",
+      "skippable": false,
+      "title": "المشروبات والقهوة المختصة",
+      "updatedAt": "2026-10-18T19:45:08.908Z"
+    },
+    {
+      "id": "sec_food",
+      "conditionQuestion": "ordered_food",
+      "createdAt": "2026-10-18T19:45:09.202Z",
+      "description": "تقييم الحلويات والمخبوزات (يمكنك تخطي هذا القسم إذا لم تطلب أطعمة)",
+      "questions": [
+        {
+          "id": "ordered_food",
+          "type": "boolean",
+          "label": "هل قمت بطلب حلويات أو مخبوزات أو أطعمة خفيفة أثناء زيارتك؟",
+          "required": true
+        },
+        {
+          "id": "food_taste",
+          "type": "stars",
+          "label": "لذة الطعم وجودة المكونات",
+          "required": false,
+          "max": 5
+        },
+        {
+          "id": "food_freshness",
+          "type": "stars",
+          "label": "طزاجة وهشاشة الكرواسون والحلويات وحرارتها",
+          "required": false,
+          "max": 5
+        },
+        {
+          "id": "portion_size",
+          "type": "stars",
+          "label": "حجم القطعة والكمية مقارنة بالتوقع",
+          "required": false,
+          "max": 5
+        },
+        {
+          "id": "food_variety",
+          "type": "stars",
+          "label": "تنوع خيارات الحلويات والمخبوزات وتوفر بدائل صحية",
+          "required": false,
+          "max": 5
+        }
+      ],
+      "sectionKey": "food",
+      "skippable": true,
+      "title": "الأطعمة والحلويات والمخبوزات",
+      "updatedAt": "2026-10-18T19:45:09.202Z"
+    },
+    {
+      "id": "sec_ambiance",
+      "conditionQuestion": null,
+      "createdAt": "2026-10-18T19:45:09.481Z",
+      "description": "راحة المقاعد، الإضاءة، التكييف، النظافة ونظافة دورات المياه",
+      "questions": [
+        {
+          "id": "seating_comfort",
+          "type": "stars",
+          "label": "راحة الكراسي وتوزيع الجلسات وتوفر مقابس شحن",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "decor_lighting",
+          "type": "stars",
+          "label": "جمال الديكور ودفء الإضاءة والأجواء الجمالية",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "ac_comfort",
+          "type": "stars",
+          "label": "ملاءمة التكييف ودرجة الحرارة في الصالة",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "place_cleanliness",
+          "type": "stars",
+          "label": "نظافة الصالة والطاولات وسرعة رفع الأكواب المستخدمة",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "restrooms_cleanliness",
+          "type": "stars",
+          "label": "نظافة وتجهيز دورات المياه ورائحتها وتوفر المعقمات",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "privacy_quiet",
+          "type": "stars",
+          "label": "توفر مساحات مريحة للعمل أو الدراسة أو الخصوصية",
+          "required": true,
+          "max": 5
+        }
+      ],
+      "sectionKey": "ambiance",
+      "skippable": false,
+      "title": "المكان والأجواء والنظافة",
+      "updatedAt": "2026-10-18T19:45:09.481Z"
+    },
+    {
+      "id": "sec_sound",
+      "conditionQuestion": null,
+      "createdAt": "2026-10-18T19:45:09.762Z",
+      "description": "مستوى الصوت، نوعية الأغاني وهدوء الصالة",
+      "questions": [
+        {
+          "id": "music_volume",
+          "type": "stars",
+          "label": "مستوى صوت الموسيقى (1: غير مريح ومزعج، 5: متزن ومثالي تماماً)",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "music_taste",
+          "type": "stars",
+          "label": "اختيار قائمة الموسيقى وملاءمتها لهوية الكافيه وروقانه",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "noise_level",
+          "type": "stars",
+          "label": "مستوى الهدوء العام داخل الصالة وسهولة التحدث مع مرافقيك",
+          "required": true,
+          "max": 5
+        }
+      ],
+      "sectionKey": "sound",
+      "skippable": false,
+      "title": "الصوت والموسيقى والضوضاء",
+      "updatedAt": "2026-10-18T19:45:09.762Z"
+    },
+    {
+      "id": "sec_service",
+      "conditionQuestion": null,
+      "createdAt": "2026-10-18T19:45:10.071Z",
+      "description": "زمن الانتظار، دقة تنفيذ طلبك والتعامل مع أي استفسار",
+      "questions": [
+        {
+          "id": "prep_time",
+          "type": "stars",
+          "label": "سرعة تجهيز الطلب وتسليمه في وقت قياسي",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "order_accuracy",
+          "type": "stars",
+          "label": "دقة الطلب ومطابقته التامة (نوع الحليب، مستوى السكر، درجة الطحن)",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "inquiry_handling",
+          "type": "stars",
+          "label": "مرونة الفريق واحترافيتهم عند الاستفسار أو طلب أي تعديل",
+          "required": true,
+          "max": 5
+        }
+      ],
+      "sectionKey": "service",
+      "skippable": false,
+      "title": "سرعة الخدمة ودقة الطلبات",
+      "updatedAt": "2026-10-18T19:45:10.071Z"
+    },
+    {
+      "id": "sec_pricing",
+      "conditionQuestion": null,
+      "createdAt": "2026-10-18T19:45:10.368Z",
+      "description": "القيمة مقابل المال، وضوح الأسعار والعروض الترويجية",
+      "questions": [
+        {
+          "id": "value_for_money",
+          "type": "stars",
+          "label": "ملاءمة الأسعار لجودة القهوة والمستوى المقدم (القيمة مقابل المال)",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "pricing_clarity",
+          "type": "stars",
+          "label": "وضوح قائمة الأسعار شاملة الضريبة دون أي غموض",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "promotions_loyalty",
+          "type": "stars",
+          "label": "جاذبية العروض الترويجية وبطاقات الولاء وبرامج المكافآت",
+          "required": true,
+          "max": 5
+        }
+      ],
+      "sectionKey": "pricing",
+      "skippable": false,
+      "title": "الأسعار والعروض والقيمة",
+      "updatedAt": "2026-10-18T19:45:10.368Z"
+    },
+    {
+      "id": "sec_accessibility",
+      "conditionQuestion": null,
+      "createdAt": "2026-10-18T19:45:10.649Z",
+      "description": "موقع الكافيه، مواقف السيارات، وخيارات الدفع الرقمي",
+      "questions": [
+        {
+          "id": "location_convenience",
+          "type": "stars",
+          "label": "سهولة الوصول لموقع الفرع واللوحات الإرشادية",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "parking_availability",
+          "type": "stars",
+          "label": "توفر مواقف سيارات مريحة وسهلة وقريبة من المدخل",
+          "required": true,
+          "max": 5
+        },
+        {
+          "id": "payment_smoothness",
+          "type": "stars",
+          "label": "سلاسة وسرعة الدفع وتوفر جميع الخيارات (مدى، Apple Pay، بطاقات)",
+          "required": true,
+          "max": 5
+        }
+      ],
+      "sectionKey": "accessibility",
+      "skippable": false,
+      "title": "سهولة الوصول والمواقف والدفع",
+      "updatedAt": "2026-10-18T19:45:10.649Z"
+    },
+    {
+      "id": "sec_open_feedback",
+      "conditionQuestion": null,
+      "createdAt": "2026-10-18T19:45:10.972Z",
+      "description": "ما أعجبك، ما يمكننا تحسينه، وسحب القسائم الأسبوعية",
+      "questions": [
+        {
+          "id": "positive_highlight",
+          "type": "text",
+          "label": "ما أكثر ما نال إعجابك وميز زيارتك اليوم في كافيه أرومة؟",
+          "placeholder": "مثال: الباريستا أحمد كان بشوشاً جداً، والـ V60 الإثيوبي فاخر ومضبوط...",
+          "required": false
+        },
+        {
+          "id": "improvement_suggestion",
+          "type": "text",
+          "label": "ما هي أهم اقتراحاتك أو الملاحظات التي تود أن نطورها في زيارتك القادمة؟",
+          "placeholder": "مثال: نتمنى توفير مقابس شحن إضافية في الطابق العلوي، وتخفيض صوت الموسيقى عصراً...",
+          "required": false
+        },
+        {
+          "id": "wants_raffle",
+          "type": "boolean",
+          "label": "هل ترغب بالدخول في السحب الأسبوعي على قسائم مجانية ومتابعة ملاحظاتك؟",
+          "required": false
+        },
+        {
+          "id": "customer_name",
+          "type": "input",
+          "label": "الاسم الكريم (اختياري):",
+          "placeholder": "مثال: محمد السعدي",
+          "required": false
+        },
+        {
+          "id": "customer_phone",
+          "type": "input",
+          "label": "رقم الجوال (اختياري):",
+          "placeholder": "05xxxxxxxx",
+          "required": false
+        },
+        {
+          "id": "customer_email",
+          "type": "input",
+          "label": "البريد الإلكتروني (اختياري):",
+          "placeholder": "name@example.com",
+          "required": false
+        }
+      ],
+      "sectionKey": "open_feedback",
+      "skippable": false,
+      "title": "رأيك الشخصي وبيانات التواصل (اختياري)",
+      "updatedAt": "2026-10-18T19:45:10.972Z"
+    }
+  ],
+  "surveys": [],
+  "settings": {
+    "allowAnonymous": true,
+    "cafeName": "مقهى موال مراكش",
+    "cafeSlogan": "أصالة المذاق المغربي والقهوة المختصة • المدينة المنورة",
+    "createdAt": "2026-10-18T19:45:11.589Z",
+    "discountRewardCode": "MAWAL10",
+    "discountRewardPercent": 10,
+    "enableRaffle": true,
+    "googleMapsUrl": "https://maps.google.com",
+    "instagramUrl": "https://instagram.com/mawal_marrakech",
+    "updatedAt": "2026-10-18T19:45:11.589Z",
+    "welcomeMessage": "أهلاً بكم في مقهى موال مراكش بالمدينة المنورة! رأيكم يصنع التميز.. شاركونا تقييمكم لنرتقي بخدمتنا ونكافئكم بخصم فوري ☕"
+  }
+}

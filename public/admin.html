@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم الجودة ورضا العملاء | مقهى موال مراكش</title>
+  <link rel="icon" type="image/png" href="/assets/logo.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="/css/survey.css">
+</head>
+<body>
+
+  <!-- Top Sticky Admin Navbar -->
+  <header class="admin-navbar">
+    <a href="/admin" class="admin-brand">
+      <img src="/assets/logo.png" alt="شعار مقهى موال مراكش" class="admin-brand-logo">
+      <div class="admin-brand-text">
+        <h1>مقهى موال مراكش</h1>
+        <span>نظام قياس رضا العملاء وتحليل جودة الخدمة • المدينة المنورة</span>
+      </div>
+    </a>
+
+    <div class="admin-user-nav">
+      <a href="/" target="_blank" class="btn-admin-action" title="فتح صفحة الاستبيان للعملاء">
+        <span>👁️ معاينة الاستبيان</span>
+      </a>
+
+      <button type="button" class="btn-admin-action" id="btn-admin-qr">
+        <span>📱 ستاند كود QR</span>
+      </button>
+
+      <button type="button" class="btn-admin-action btn-admin-primary" id="btn-export-excel" title="تنزيل ملف إكسل بجميع الإجابات">
+        <span>📊 تصدير Excel</span>
+      </button>
+
+      <button type="button" class="btn-admin-action" id="btn-export-csv" title="تنزيل ملف CSV">
+        <span>📄 CSV</span>
+      </button>
+
+      <button type="button" class="btn-admin-action" id="btn-admin-profile" title="تعديل البريد الإلكتروني وكلمة المرور">
+        <span>🔐 الحساب والأمان</span>
+      </button>
+
+      <div style="font-size: 0.85rem; font-weight: 700; color: var(--admin-primary); margin: 0 4px;">
+        👤 <span id="admin-display-name">المدير العام</span>
+      </div>
+
+      <button type="button" class="btn-admin-action btn-admin-danger" id="btn-logout" title="تسجيل الخروج">
+        <span>خروج 🚪</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Filter & Search Toolbar -->
+  <section class="filter-bar">
+    <div class="filter-group">
+      <label for="filter-branch" style="font-weight: 700; font-size: 0.85rem;">الفرع:</label>
+      <select id="filter-branch" class="filter-select">
+        <option value="all">كافة الفروع</option>
+      </select>
+
+      <label for="filter-daterange" style="font-weight: 700; font-size: 0.85rem;">الفترة الزمنية:</label>
+      <select id="filter-daterange" class="filter-select">
+        <option value="all">كافة الأوقات</option>
+        <option value="today">اليوم فقط</option>
+        <option value="7days" selected>آخر 7 أيام</option>
+        <option value="30days">آخر 30 يوماً</option>
+      </select>
+
+      <label for="filter-visittime" style="font-weight: 700; font-size: 0.85rem;">وقت الزيارة:</label>
+      <select id="filter-visittime" class="filter-select">
+        <option value="all">كافة الفترات</option>
+        <option value="الصباح">فترة الصباح (7 - 11 ص)</option>
+        <option value="الظهيرة">فترة الظهيرة (11 ص - 4 ع)</option>
+        <option value="المساء">فترة المساء (4 ع - 9 م)</option>
+        <option value="السهرة">فترة السهرة (9 م - 12 ص)</option>
+      </select>
+
+      <label for="filter-minrating" style="font-weight: 700; font-size: 0.85rem;">التقييم:</label>
+      <select id="filter-minrating" class="filter-select">
+        <option value="all">جميع التقييمات</option>
+        <option value="4">الراضون جداً (4★ فأكثر)</option>
+        <option value="3">مقبول فأعلى (3★ فأكثر)</option>
+      </select>
+    </div>
+
+    <div class="search-input-box">
+      <input type="text" id="filter-search" placeholder="بحث باسم العميل، الجوال، ملاحظة...">
+      <span class="search-icon">🔍</span>
+    </div>
+  </section>
+
+  <!-- Navigation Tabs -->
+  <nav class="tabs-container" aria-label="أقسام لوحة التحكم">
+    <button type="button" class="tab-btn active" data-tab="tab-analytics">
+      📊 لوحة المؤشرات والتحليلات
+    </button>
+    <button type="button" class="tab-btn" data-tab="tab-submissions">
+      📋 سجل التقييمات والشكاوى
+    </button>
+    <button type="button" class="tab-btn" data-tab="tab-insights">
+      💡 رصد نقاط الضعف وفرص التحسين
+    </button>
+    <button type="button" class="tab-btn" data-tab="tab-questions">
+      ⚙️ إدارة وتخصيص أسئلة الاستبيان
+    </button>
+    <button type="button" class="tab-btn" data-tab="tab-branches">
+      🏢 إدارة الفروع
+    </button>
+    <button type="button" class="tab-btn" data-tab="tab-profile">
+      🔐 إدارة الحساب والأمان
+    </button>
+  </nav>
+
+  <!-- Main View Container -->
+  <main class="admin-content">
+
+    <!-- TAB 1: Analytics & KPIs -->
+    <div class="tab-view active" id="tab-analytics">
+      
+      <!-- Top KPI Cards -->
+      <section class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">إجمالي المشاركات</span>
+            <span class="kpi-icon">📝</span>
+          </div>
+          <div class="kpi-value" id="kpi-total">0</div>
+          <div class="kpi-subtext">
+            <span class="kpi-pill pill-success">محدث لحظياً</span>
+            <span>استبيانات حقيقية مكتملة</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">معدل الرضا العام الكلي</span>
+            <span class="kpi-icon">⭐</span>
+          </div>
+          <div class="kpi-value" id="kpi-satisfaction">0 / 5</div>
+          <div class="kpi-subtext">
+            <span class="kpi-pill pill-info">CSAT</span>
+            <span id="kpi-csat">0%</span> نسبة العملاء الراضين
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">مؤشر الترويج الصافي (NPS)</span>
+            <span class="kpi-icon">🚀</span>
+          </div>
+          <div class="kpi-value" id="kpi-nps">0</div>
+          <div class="kpi-subtext" id="kpi-nps-sub">
+            <span>جاري الحساب...</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-title">متوسط زمن الإكمال</span>
+            <span class="kpi-icon">⏱️</span>
+          </div>
+          <div class="kpi-value">1.8 دقيقة</div>
+          <div class="kpi-subtext">
+            <span class="kpi-pill pill-success">تجربة سريعة</span>
+            <span>معدل ارتداد أقل من 4%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts Row 1 -->
+      <section class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-title">📊 مقارنة أداء الأقسام الثمانية (من 5 نجوم)</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart-sections"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-title">📈 الخط الزمني لتطور رضا العملاء وعدد التقييمات</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart-timeline"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts Row 2 -->
+      <section class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-title">🎯 توزيع مؤشر NPS (المروجون vs المنتقدون)</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart-nps"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-title">🕒 توزيع أوقات وفترات زيارة العملاء</h3>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chart-visittimes"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- Detailed Question by Question Deep Dive Table -->
+      <section class="data-table-container">
+        <div class="table-header-box">
+          <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--admin-primary);">
+            🔍 التحليل الدقيق لكل سؤال ومعيار جودة
+          </h3>
+          <span style="font-size: 0.85rem; color: var(--admin-text-muted);">
+            مرتبة تنازلياً حسب تقييم العملاء لاكتشاف مكامن التميز ونقاط الضعف
+          </span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>السؤال / المعيار</th>
+                <th>القسم</th>
+                <th>المشاركات</th>
+                <th>متوسط التقييم</th>
+                <th>مستوى الإنجاز</th>
+                <th>التشخيص</th>
+              </tr>
+            </thead>
+            <tbody id="questions-breakdown-tbody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- TAB 2: Submissions & Complaints Table -->
+    <div class="tab-view" id="tab-submissions">
+      <div class="data-table-container">
+        <div class="table-header-box">
+          <div>
+            <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--admin-primary);">
+              📋 سجل تقييمات العملاء الفردية والشكاوى
+            </h3>
+            <span style="font-size: 0.85rem; color: var(--admin-text-muted);" id="submissions-count-display">
+              (جاري التحميل...)
+            </span>
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>المعرف</th>
+                <th>الفرع</th>
+                <th>التاريخ</th>
+                <th>التقييم العام</th>
+                <th>NPS</th>
+                <th>بيانات العميل</th>
+                <th>أبرز ما أعجبه</th>
+                <th>مقترحات التحسين</th>
+                <th>الحالة</th>
+                <th>الإجراء</th>
+              </tr>
+            </thead>
+            <tbody id="submissions-tbody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Smart Insights & Weak Points Engine -->
+    <div class="tab-view" id="tab-insights">
+      <div class="insights-section">
+        <h3 class="section-box-title">
+          <span>💡 محرك التشخيص التشغيلي الذكي واكتشاف فرص التحسين</span>
+        </h3>
+        <p style="font-size: 0.9rem; color: var(--admin-text-muted); margin-bottom: 18px;">
+          يقوم النظام تلقائياً بتحليل كافة الإجابات والملاحظات واكتشاف المعايير التي انخفضت عن المعدل المستهدف (4.0/5)، وصياغة توصيات تنفيذية عاجلة لمدير الفرع.
+        </p>
+
+        <div class="insights-grid" id="insights-container">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: Questions Management & Customization -->
+    <div class="tab-view" id="tab-questions">
+      <div class="table-header-box" style="background: #fff; border-radius: var(--radius-md); margin-bottom: 20px; border: 1px solid var(--admin-border);">
+        <div>
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--admin-primary);">
+            ⚙️ إدارة وتخصيص أسئلة الاستبيان
+          </h3>
+          <p style="font-size: 0.88rem; color: var(--admin-text-muted); margin-top: 4px;">
+            يمكنك تخصيص صياغة أي سؤال ليناسب هوية الكافيه أو حملاتك التسويقية وتحديثها فورياً.
+          </p>
+        </div>
+      </div>
+
+      <div id="questions-editor-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- TAB 5: Branches Management -->
+    <div class="tab-view" id="tab-branches">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+        <div>
+          <h3 class="section-box-title">🏢 فروع الكافيه الحالية</h3>
+          <div id="branches-list-container">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <div>
+          <h3 class="section-box-title">➕ إضافة فرع جديد للنظام</h3>
+          <form class="admin-form-card" id="form-add-branch">
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 0.9rem;">اسم الفرع الجديد:</label>
+              <input type="text" id="new-branch-name" class="input-field" placeholder="مثال: فرع حي الصحافة" required>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 0.9rem;">المدينة:</label>
+              <input type="text" id="new-branch-city" class="input-field" placeholder="مثال: المدينة المنورة" value="المدينة المنورة">
+            </div>
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 0.9rem;">العنوان بالتفصيل:</label>
+              <input type="text" id="new-branch-address" class="input-field" placeholder="مثال: طريق سلطانة، الدور الثاني">
+            </div>
+            <div style="margin-bottom: 20px;">
+              <label style="display: block; font-weight: 700; margin-bottom: 6px; font-size: 0.9rem;">رقم واتساب المشرف للإشعارات:</label>
+              <input type="text" id="new-branch-whatsapp" class="input-field" placeholder="مثال: 009665xxxxxxxx" style="direction: ltr; text-align: right;">
+            </div>
+            <button type="submit" class="btn-admin-action btn-admin-primary" style="width: 100%; justify-content: center; padding: 12px;">
+              إضافة الفرع وتفعيله للاستبيان ✓
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: Admin Profile & Security -->
+    <div class="tab-view" id="tab-profile">
+      <div class="view-header">
+        <div>
+          <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--admin-primary); margin-bottom: 4px;">
+            إعدادات حساب الإدارة والأمان
+          </h2>
+          <p style="font-size: 0.88rem; color: var(--admin-text-muted);">
+            تعديل البريد الإلكتروني، اسم المستخدم، وتغيير كلمة مرور المشرف العام
+          </p>
+        </div>
+      </div>
+
+      <div style="max-width: 620px; background: #fff; border: 1px solid var(--admin-border); border-radius: var(--radius-md); padding: 26px; box-shadow: var(--admin-shadow-sm); margin-top: 16px;">
+        <div id="profile-alert" style="display: none; padding: 12px 16px; border-radius: var(--radius-sm); margin-bottom: 20px; font-weight: 700; font-size: 0.9rem;"></div>
+
+        <form id="profile-form">
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--admin-primary); margin-bottom: 16px; border-bottom: 1.5px solid #f0e6da; padding-bottom: 8px;">
+            👤 البيانات الشخصية والبريد الإلكتروني
+          </h3>
+
+          <div style="margin-bottom: 16px;">
+            <label for="prof-username" style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--admin-primary);">
+              اسم المستخدم (Username):
+            </label>
+            <input type="text" id="prof-username" class="filter-select" required style="width: 100%; padding: 10px 14px; font-size: 0.95rem; background: #fff; cursor: text;">
+            <div style="font-size: 0.78rem; color: var(--admin-text-muted); margin-top: 4px;">يستخدم للدخول للوحة التحكم.</div>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <label for="prof-email" style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--admin-primary);">
+              البريد الإلكتروني للمدير (Email):
+            </label>
+            <input type="email" id="prof-email" class="filter-select" placeholder="admin@mawal-marrakech.com" required style="width: 100%; padding: 10px 14px; font-size: 0.95rem; background: #fff; cursor: text; direction: ltr; text-align: right;">
+            <div style="font-size: 0.78rem; color: var(--admin-text-muted); margin-top: 4px;">يمكنك تسجيل الدخول إما باسم المستخدم أو بهذا البريد الإلكتروني.</div>
+          </div>
+
+          <div style="margin-bottom: 24px;">
+            <label for="prof-name" style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--admin-primary);">
+              اسم المشرف / المسمى الوظيفي:
+            </label>
+            <input type="text" id="prof-name" class="filter-select" placeholder="مدير العمليات والجودة" required style="width: 100%; padding: 10px 14px; font-size: 0.95rem; background: #fff; cursor: text;">
+          </div>
+
+          <h3 style="font-size: 1.05rem; font-weight: 800; color: var(--admin-primary); margin-bottom: 16px; border-bottom: 1.5px solid #f0e6da; padding-bottom: 8px;">
+            🔒 تغيير كلمة المرور (اختياري)
+          </h3>
+
+          <div style="margin-bottom: 16px;">
+            <label for="prof-new-password" style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--admin-primary);">
+              كلمة المرور الجديدة:
+            </label>
+            <input type="password" id="prof-new-password" class="filter-select" placeholder="اتركها فارغة إذا كنت لا ترغب بتغييرها" style="width: 100%; padding: 10px 14px; font-size: 0.95rem; background: #fff; cursor: text;">
+            <div style="font-size: 0.78rem; color: var(--admin-text-muted); margin-top: 4px;">يجب ألا تقل عن 6 خانات (يفضل أن تحتوي أرقاماً ورموزاً).</div>
+          </div>
+
+          <div style="margin-bottom: 24px;">
+            <label for="prof-confirm-password" style="display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 6px; color: var(--admin-primary);">
+              تأكيد كلمة المرور الجديدة:
+            </label>
+            <input type="password" id="prof-confirm-password" class="filter-select" placeholder="أعد إدخال كلمة المرور الجديدة" style="width: 100%; padding: 10px 14px; font-size: 0.95rem; background: #fff; cursor: text;">
+          </div>
+
+          <div style="background: #fff8f0; border: 1.5px solid #ebdcd0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+            <label for="prof-current-password" style="display: block; font-weight: 800; font-size: 0.92rem; margin-bottom: 6px; color: #b45309;">
+              🔑 كلمة المرور الحالية (مطلوبة لتأكيد حفظ أي تعديل):
+            </label>
+            <input type="password" id="prof-current-password" class="filter-select" placeholder="أدخل كلمة المرور الحالية لتأكيد التعديلات" required style="width: 100%; padding: 10px 14px; font-size: 0.95rem; background: #fff; cursor: text; border-color: var(--admin-accent);">
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <button type="submit" class="btn-admin-action btn-admin-primary" id="btn-save-profile" style="padding: 12px 24px; font-size: 0.95rem; font-weight: 800;">
+              💾 حفظ التعديلات في MongoDB Atlas
+            </button>
+            <span id="profile-saving-spinner" style="display: none; font-size: 0.85rem; color: var(--admin-accent); font-weight: 700;">جاري الحفظ والمزامنة... ⏳</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Slide-out Submission Detail Drawer -->
+  <div class="drawer-overlay" id="submission-drawer">
+    <div class="drawer-panel">
+      <button type="button" class="drawer-close" id="drawer-close">&times;</button>
+      <div id="drawer-content">
+        <!-- Populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Table Stand Modal for Admin -->
+  <div class="modal-overlay" id="admin-qr-modal" role="dialog">
+    <div class="modal-content">
+      <button type="button" class="modal-close" id="btn-close-admin-qr">&times;</button>
+      <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--admin-primary); margin-bottom: 6px;">
+        مولد ستاند رمز QR لطاولات الكافيه
+      </h3>
+      <p style="font-size: 0.88rem; color: var(--admin-text-muted); margin-bottom: 16px;">
+        خصص الفرع ورقم الطاولة واطبع الستاند مباشرة لوضعه على طاولات الصالة والتراس
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; text-align: right;">
+        <div>
+          <label style="font-size: 0.82rem; font-weight: 700;">الفرع:</label>
+          <select id="qr-branch-select" class="filter-select" style="width: 100%; margin-top: 4px;"></select>
+        </div>
+        <div>
+          <label style="font-size: 0.82rem; font-weight: 700;">رقم الطاولة (اختياري):</label>
+          <input type="text" id="qr-table-number" class="input-field" placeholder="مثال: 5" style="padding: 7px 12px; margin-top: 4px;">
+        </div>
+      </div>
+
+      <div class="table-tent-card">
+        <div style="font-size: 1.15rem; font-weight: 800; color: var(--admin-accent);" id="admin-qr-title">مقهى موال مراكش - المدينة المنورة</div>
+        <div style="font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-top: 4px;">رأيك يصنع الفرق.. شاركنا تجربتك واحصل على خصم 10% ☕</div>
+        
+        <div class="table-tent-qr" id="admin-qr-canvas"></div>
+        
+        <div style="font-size: 0.8rem; color: #ffda9e; font-weight: 700;">امسح الكود بكاميرا جوالك مباشرة</div>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: center;">
+        <button type="button" class="btn-admin-action btn-admin-primary" id="btn-print-admin-qr">
+          🖨️ طباعة ستاند الطاولة (جاهز للمطبعة)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Local Vendor Scripts -->
+  <script src="/js/chart.min.js"></script>
+  <script src="/js/qrcode.min.js"></script>
+  <!-- Admin Controller -->
+  <script src="/js/admin.js"></script>
+</body>
+</html>

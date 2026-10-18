@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل دخول الإدارة | مقهى موال مراكش</title>
+  <link rel="icon" type="image/png" href="/assets/logo.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/survey.css">
+  <style>
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .login-card {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-width: 440px;
+      width: 100%;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary), var(--accent));
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .login-header img {
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radius-md);
+      margin-bottom: 12px;
+      border: 1.5px solid var(--accent);
+      box-shadow: var(--shadow-sm);
+      object-fit: cover;
+    }
+    .login-header h2 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+    .login-header p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--accent), #b58042);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 1.05rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(200, 150, 88, 0.35);
+      transition: var(--transition);
+      margin-top: 10px;
+    }
+    .btn-login:hover {
+      background: linear-gradient(135deg, #ddaa6b, var(--accent));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(200, 150, 88, 0.45);
+    }
+    .alert-error {
+      background: #ffebee;
+      color: var(--danger);
+      border: 1px solid #ffcdd2;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 18px;
+      display: none;
+    }
+    .login-hint {
+      margin-top: 24px;
+      padding: 12px;
+      background: #faf7f2;
+      border-radius: var(--radius-sm);
+      border: 1px dashed var(--border-subtle);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .login-hint code {
+      font-weight: 800;
+      color: var(--primary);
+      background: #f0e6da;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="/assets/logo.png" alt="شعار مقهى موال مراكش">
+        <h2>لوحة تحكم مقهى موال مراكش</h2>
+        <p>نظام قياس رضا العملاء وتحليل جودة الخدمة • المدينة المنورة</p>
+      </div>
+
+      <div class="alert-error" id="login-error"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="username">اسم المستخدم:</label>
+          <input type="text" id="username" class="input-field" placeholder="أدخل اسم المستخدم" required value="admin">
+        </div>
+
+        <div class="form-group">
+          <label for="password">كلمة المرور:</label>
+          <input type="password" id="password" class="input-field" placeholder="أدخل كلمة المرور" required value="">
+        </div>
+
+        <button type="submit" class="btn-login" id="btn-submit-login">
+          تسجيل الدخول للوحة التحكم ➔
+        </button>
+      </form>
+
+      <div style="text-align: center; margin-top: 24px;">
+        <a href="/" style="font-size: 0.85rem; color: var(--accent); text-decoration: none; font-weight: 700;">
+          ← العودة لصفحة الاستبيان الرئيسية
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const errBox = document.getElementById('login-error');
+    const btnSubmit = document.getElementById('btn-submit-login');
+
+    // If already logged in, redirect to admin
+    const token = localStorage.getItem('aroma_admin_token');
+    if (token) {
+      fetch('/api/auth/verify', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }).then(r => r.json()).then(data => {
+        if (data.success) window.location.href = '/admin';
+      }).catch(() => {});
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errBox.style.display = 'none';
+      btnSubmit.disabled = true;
+      btnSubmit.innerHTML = 'جاري التحقق... ⏳';
+
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          localStorage.setItem('aroma_admin_token', data.data.token);
+          localStorage.setItem('aroma_admin_user', JSON.stringify(data.data.admin));
+          window.location.href = '/admin';
+        } else {
+          errBox.textContent = data.message || 'بيانات الدخول غير صحيحة';
+          errBox.style.display = 'block';
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = 'تسجيل الدخول للوحة التحكم ➔';
+        }
+      } catch (err) {
+        errBox.textContent = 'تعذر الاتصال بالخادم، يرجى المحاولة ثانية';
+        errBox.style.display = 'block';
+        btnSubmit.disabled = false;
+        btnSubmit.innerHTML = 'تسجيل الدخول للوحة التحكم ➔';
+      }
+    });
+  </script>
+</body>
+</html>
