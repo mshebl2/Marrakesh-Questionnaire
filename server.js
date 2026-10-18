@@ -59,7 +59,7 @@ app.get('/api/config', (req, res) => {
 });
 
 // 2. Submit customer survey
-app.post('/api/surveys', (req, res) => {
+app.post('/api/surveys', async (req, res) => {
   try {
     const { branchId, ratings, answers, durationSeconds } = req.body;
 
@@ -72,7 +72,7 @@ app.post('/api/surveys', (req, res) => {
     }
 
     // Save survey to database
-    const newSurvey = db.addSurvey({
+    const newSurvey = await db.addSurvey({
       branchId,
       ratings,
       answers,
@@ -584,7 +584,11 @@ app.use((req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`☕ Mawal Marrakech Cafe Survey Platform running at http://localhost:${PORT}`);
-  console.log(`📊 Admin Dashboard available at http://localhost:${PORT}/admin`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`☕ Mawal Marrakech Cafe Survey Platform running at http://localhost:${PORT}`);
+    console.log(`📊 Admin Dashboard available at http://localhost:${PORT}/admin`);
+  });
+}
+
+module.exports = app;

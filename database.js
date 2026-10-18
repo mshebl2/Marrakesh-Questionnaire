@@ -11,7 +11,7 @@ function uuidv4() {
 }
 
 const DB_PATH = path.join(__dirname, 'data', 'db.json');
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/mawal_marrakech';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://mshebl215_db_user:qxNlMEBfW76fSSSY@cluster0.iajvwrp.mongodb.net/mawal_marrakech?retryWrites=true&w=majority';
 
 // Default questions configuration
 const DEFAULT_QUESTIONS = [
@@ -517,13 +517,18 @@ class Database {
   constructor() {
     this.data = null;
     this.mongoConnected = false;
+    this.mongoPromise = null;
     this.init();
-    this.initMongo();
+    this.mongoPromise = this.initMongo();
   }
 
   init() {
-    if (!fs.existsSync(path.dirname(DB_PATH))) {
-      fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
+    try {
+      if (!fs.existsSync(path.dirname(DB_PATH))) {
+        fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
+      }
+    } catch (e) {
+      // Ignore read-only filesystem errors (Vercel)
     }
 
     if (fs.existsSync(DB_PATH)) {
@@ -542,6 +547,7 @@ class Database {
   }
 
   async initMongo() {
+    if (this.mongoConnected && mongoose.connection.readyState === 1) return;
     try {
       await mongoose.connect(MONGODB_URI, {
         serverSelectionTimeoutMS: 5000
@@ -655,9 +661,13 @@ class Database {
       fs.writeFileSync(tempPath, JSON.stringify(this.data, null, 2), 'utf8');
       fs.renameSync(tempPath, DB_PATH);
     } catch (err) {
-      console.error('Failed to save db.json:', err);
-      // Fallback direct write
-      fs.writeFileSync(DB_PATH, JSON.stringify(this.data, null, 2), 'utf8');
+      // In serverless / read-only environments (e.g. Vercel), local disk writes are not permitted.
+      // We safely try direct write, and if that also fails due to read-only filesystem, catch silently.
+      try {
+        fs.writeFileSync(DB_PATH, JSON.stringify(this.data, null, 2), 'utf8');
+      } catch (writeErr) {
+        // Read-only filesystem (Vercel) - safely caught so requests never crash
+      }
     }
   }
 
@@ -670,7 +680,7 @@ class Database {
     return this.data.surveys.find(s => s.id === id);
   }
 
-  addSurvey(surveyData) {
+  async addSurvey(surveyData) {
     const newId = `srv-${Date.now()}`;
     const branch = this.data.branches.find(b => b.id === surveyData.branchId) || this.data.branches[0];
 
@@ -703,10 +713,15 @@ class Database {
     this.data.surveys.unshift(newSurvey);
     this.save();
 
-    // Async persist to MongoDB Atlas
-    Survey.create(newSurvey).catch(err => {
+    // Persist to MongoDB Atlas
+    try {
+      if (this.mongoPromise) {
+        await this.mongoPromise;
+      }
+      await Survey.create(newSurvey);
+    } catch (err) {
       console.error('MongoDB Atlas Survey.create error:', err.message);
-    });
+    }
 
     return newSurvey;
   }

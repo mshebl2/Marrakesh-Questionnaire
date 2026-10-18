@@ -6,7 +6,7 @@
       "name": "المدير العام",
       "passwordHash": "$2b$10$lbjS9XU552fSlSGx8MWb6.IqwikyKJmwLzQvuVHXkKWOPwiueIX9u",
       "role": "superadmin",
-      "updatedAt": "2026-10-18T19:49:31.549Z",
+      "updatedAt": "2026-10-18T19:58:51.802Z",
       "username": "admin",
       "email": "admin@mawal-marrakech.com"
     }
@@ -470,7 +470,90 @@
       "updatedAt": "2026-10-18T19:45:10.972Z"
     }
   ],
-  "surveys": [],
+  "surveys": [
+    {
+      "id": "srv-1792354419843",
+      "branchId": "branch-1",
+      "branchName": "فرع النبلاء - الدور الثاني",
+      "createdAt": "2026-10-18T20:13:39.843Z",
+      "ratings": {
+        "overall_satisfaction": 5,
+        "nps_score": 10,
+        "coffee_taste": 5,
+        "temperature_perfection": 5,
+        "welcome_reception": 5,
+        "staff_attitude": 5
+      },
+      "answers": {
+        "visit_type": "جلسة داخلية في الصالة",
+        "visit_time": "فترة المساء (4 ع - 9 م)",
+        "beverage_type": "شاي مغربي أصيل بالنعناع",
+        "positive_highlight": "كل شيء ممتاز جداً",
+        "customer_name": "محمد شبل",
+        "customer_phone": "0567833138"
+      },
+      "averageScore": 5,
+      "npsScore": 10,
+      "overallSatisfaction": 5,
+      "durationSeconds": 90,
+      "status": "new",
+      "adminNotes": "",
+      "voucherCode": "MAWAL5258"
+    },
+    {
+      "id": "srv-1792354298657",
+      "branchId": "branch-2",
+      "branchName": "فرع سلطانة - الرضا مول - الدور الثاني",
+      "createdAt": "2026-10-18T20:11:38.658Z",
+      "ratings": {
+        "nps_score": 7,
+        "overall_satisfaction": 5,
+        "welcome_reception": 5,
+        "staff_attitude": 5,
+        "barista_knowledge": 5,
+        "service_speed": 5,
+        "coffee_taste": 3,
+        "temperature_perfection": 4,
+        "menu_variety": 3,
+        "presentation_art": 3,
+        "ordered_food": false,
+        "seating_comfort": 5,
+        "decor_lighting": 5,
+        "ac_comfort": 5,
+        "place_cleanliness": 5,
+        "restrooms_cleanliness": 5,
+        "privacy_quiet": 5,
+        "music_volume": 5,
+        "music_taste": 5,
+        "noise_level": 5,
+        "order_accuracy": 2,
+        "prep_time": 4,
+        "inquiry_handling": 5,
+        "promotions_loyalty": 4,
+        "pricing_clarity": 5,
+        "value_for_money": 5,
+        "location_convenience": 4,
+        "parking_availability": 4,
+        "payment_smoothness": 4,
+        "wants_raffle": false
+      },
+      "answers": {
+        "visit_type": "خدمة السيارات / درايف ثرو",
+        "visit_time": "الصباح الباكر (7 ص - 11 ص)",
+        "beverage_type": "أمريكانو / كورتادو",
+        "ordered_food": false,
+        "wants_raffle": false
+      },
+      "averageScore": 4.44,
+      "npsScore": 7,
+      "overallSatisfaction": 5,
+      "durationSeconds": 1983,
+      "status": "new",
+      "adminNotes": "",
+      "voucherCode": "MAWAL2560",
+      "updatedAt": "2026-10-18T20:11:38.658Z"
+    }
+  ],
   "settings": {
     "allowAnonymous": true,
     "cafeName": "مقهى موال مراكش",
